@@ -20,7 +20,7 @@ def pie(percentages, data):
     plt.pie(percentages, labels=data, autopct='%.2f', explode=[0.1]*len(data))
     plt.show()
 
-# histogram(all_df.price, 'orangered', 'black')
+# histogram(all_df.price, 'orangered', 'black')(biểu đồ)
 
 mem_percs = [all_df[all_df.memory==n].shape[0] / 966 for n in all_df.memory.unique()]
 pie(mem_percs, all_df.memory.unique())
