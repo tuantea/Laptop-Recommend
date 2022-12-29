@@ -5,11 +5,11 @@ import re
 pd.set_option('display.width', 500)
 pd.set_option('display.max_columns', 15)
 
-# Storing Gaming Laptops info
+# Storing Gaming Laptops info (Lưu trữ thông tin Laptop gaming)
 gaming_laptops_df = pd.read_csv("../data/gaming_laptops_raw.csv", sep=",")
 gaming_laptops_df = gaming_laptops_df.fillna(-1)  # Will get back to later
 
-# Converting Rating Values into Integers
+# Converting Rating Values into Integers (Chuyển đổi giá trị xếp hạng thành số nguyên)
 gaming_laptops_df["rating"].fillna(4)
 def clean_ratings():
     for i in range(len(gaming_laptops_df["rating"])):
@@ -17,14 +17,14 @@ def clean_ratings():
 
 # Converting Screen Size Values into Floats
 def clean_screen_sizes():
-    # turn all screen sizes into floats
+    # turn all screen sizes into floats ( biến tất cả các kích thước màn hình thành dạng float )
     for i in range(len(gaming_laptops_df['screen'])):
         if gaming_laptops_df.loc[i, 'screen'] == 'No':
             gaming_laptops_df.loc[i, 'screen'] = -1
         if type(gaming_laptops_df.loc[i, 'screen']) == str:
             gaming_laptops_df.loc[i, 'screen'] = float(gaming_laptops_df.loc[i, 'screen'].split(' ')[0].replace('"', ''))
 
-#Cleaning Gaming Laptops' Cores Data
+#Cleaning Gaming Laptops' Cores Data (Dọn dẹp dữ liệu lõi của máy tính xách tay chơi game)
 def clean_cores():
     for i in range(len(gaming_laptops_df['cores'])):
         if gaming_laptops_df.loc[i, 'cores'] == -1:
@@ -38,7 +38,7 @@ def clean_cores():
         elif "8" in gaming_laptops_df.loc[i, "cores"]:
             gaming_laptops_df.loc[i, "cores"] = 8
 
-#Cleaning Gaming Laptop's GPU Type Data
+#Cleaning Gaming Laptop's GPU Type Data (Làm sạch dữ liệu loại GPU của Laptop gaming) 
 def clean_gpu_type():
     for i in range(len(gaming_laptops_df["gpu_type"])):
         if "0" in gaming_laptops_df["gpu_type"]:
@@ -87,7 +87,7 @@ def clean_gpu_type():
             gaming_laptops_df["gpu_type"]:
             gaming_laptops_df.loc[i, "gpu_type"] = 2080
 
-#Cleaning Gaming Laptops' GPU Memory Data
+#Cleaning Gaming Laptops' GPU Memory Data (Làm sạch dữ liệu bộ nhớ GPU của Laptiop gaming)
 def clean_gpu_memory():
     for i in range(len(gaming_laptops_df["gpu_memory"])):
         if gaming_laptops_df.loc[i,"gpu_memory"] == -1:
@@ -106,9 +106,9 @@ def clean_gpu_memory():
         elif "16" in gaming_laptops_df["gpu_memory"]:
             gaming_laptops_df.loc[i, "gpu_memory"] = 16
 
-#Cleaning Gaming Laptops' Memory Data
+#Cleaning Gaming Laptops' Memory Data (Dọn dẹp dữ liệu bộ nhớ Laptop gaming)
 def clean_memory():
-    # retrieve GB ints from raw data
+    # retrieve GB ints from raw data (truy xuất GB ints từ dữ liệu thô)
     for i in range(len(gaming_laptops_df['memory'])):
         #if type(gaming_laptops_df.loc[i, 'memory']) == int or type(gaming_laptops_df.loc[i, 'memory']) == 'numpy.64int':
             #continue
@@ -117,30 +117,30 @@ def clean_memory():
         else:
             gaming_laptops_df.loc[i, 'memory'] = int(gaming_laptops_df.loc[i, 'memory'].split(' ')[0])
 
-#Cleaning Gaming Laptops' CPU Speed
+#Cleaning Gaming Laptops' CPU Speed (Dọn dẹp tốc độ CPU của máy tính Laptop gaming)
 def clean_cpu_speed():
     for i in range(len(gaming_laptops_df['cpu_speed'])):
-        # missing values
+        # missing values (giá trị còn thiếu)
         if gaming_laptops_df.loc[i, 'cpu_speed'] == -1:
             gaming_laptops_df.loc[i,"cpu_speed"] = 2.4
 
-        # case with extra words at beginning
+        # case with extra words at beginning (trường hợp có thêm từ ở đầu)
         elif '(' in gaming_laptops_df.loc[i, 'cpu_speed']:
             gaming_laptops_df.loc[i, 'cpu_speed'] = float(gaming_laptops_df.loc[i, 'cpu_speed'].split('(')[1].replace(')', '').split(' ')[0])
 
-        # when GHz is at the end
+        # when GHz is at the end (khi GHz ở cuối)
         elif 'GHz' in gaming_laptops_df.loc[i, 'cpu_speed']:
             gaming_laptops_df.loc[i, 'cpu_speed'] = float(gaming_laptops_df.loc[i, 'cpu_speed'].split(' ')[0])
 
-#Cleaning Gaming Laptops' Price Data
+#Cleaning Gaming Laptops' Price Data (Dọn dẹp dữ liệu giá của Laptop gaming)
 def clean_prices():
     for i in range(len(gaming_laptops_df['price'])):
         if type(gaming_laptops_df.loc[i, 'price']) == str:
             gaming_laptops_df.loc[i, 'price'] = float(gaming_laptops_df.loc[i, 'price'].replace(',', ''))
         elif gaming_laptops_df.loc[i, 'price'] == -1:
-            gaming_laptops_df.loc[i, 'price'] = 1493.64  # fill missing with the mean price
+            gaming_laptops_df.loc[i, 'price'] = 1493.64  # fill missing with the mean price ( điền giá trung bình còn thiếu)
 
-#Cleaning Gaming Laptops' Storage Data
+#Cleaning Gaming Laptops' Storage Data (Dọn dẹp dữ liệu lưu trữ của Laptop gaming)
 def clean_storage():
     for i in range(len(gaming_laptops_df['storage'])):
         if gaming_laptops_df.loc[i, 'storage'] == -1:
@@ -150,10 +150,10 @@ def clean_storage():
                 gaming_laptops_df.loc[i, 'storage'] = gaming_laptops_df.loc[i, 'storage'].replace('+', ',')
                 storage_split_list = re.split('[A-z]|,', gaming_laptops_df.loc[i, 'storage'])
 
-            # retrieve integer values from raw data
+            # retrieve integer values from raw data (truy xuất các giá trị số nguyên từ dữ liệu thô)
             storage_int = 0
             for n in range(len(storage_split_list)):
-                # add up all the integers in the split up string
+                # add up all the integers in the split up string (cộng tất cả các số nguyên trong chuỗi chia nhỏ)
                 try:
                     val = int(storage_split_list[n])
                     if val == 1:
@@ -163,8 +163,7 @@ def clean_storage():
                     storage_int += int(val)
                 except ValueError:
                     pass
-
-            # assign new value to storage column
+            # assign new value to storage column (gán giá trị mới cho cột lưu trữ)
             gaming_laptops_df.loc[i, 'storage'] = storage_int
 
 ## MAIN
