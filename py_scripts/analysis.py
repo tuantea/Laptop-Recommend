@@ -9,13 +9,13 @@ gaming_df = pd.read_csv('../data/gaming_laptops_cleaned.csv', sep=',', encoding=
 all_df = pd.concat([study_df, gaming_df]).reset_index(drop=True)
 
 
-## DATA VISUALIZATION
-# histogram
+## Trực quan hóa dữ liệu
+# histogram (biểu đồ)
 def histogram(data, fc, ec):
     plt.hist(data, facecolor=fc, edgecolor=ec)
     plt.show()
 
-# pie chart
+# pie chart (biểu đồ tròn)
 def pie(percentages, data):
     plt.pie(percentages, labels=data, autopct='%.2f', explode=[0.1]*len(data))
     plt.show()
