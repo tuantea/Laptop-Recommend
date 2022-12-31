@@ -13,17 +13,33 @@ Implementation Details:
 -Establish global variables that could act as flags based on user input
 -Use nested conditional statements under an if-else statement that divides the program between new and experienced computer users (i.e. if? new#1: else? exp#2).
 -Keep track of how many people used this program via a counter system in the greeting code.
+
+Tổng quan: Giao diện người dùng nhập liệu cho máy tính xách tay nên được khuyến nghị.
+
+Chi tiết:
+-Người dùng được nhắc nhở ban đầu (lời chào + giới thiệu ngắn gọn)
+-Người dùng muốn một chiếc máy tính xách tay phù hợp nhất với nhu cầu của họ.
+-Mỗi lời nhắc sẽ từ từ chia nhỏ các câu hỏi khác nhau liên quan đến các thông số kỹ thuật khác nhau của máy tính (ví dụ: bộ nhớ, kích thước màn hình).
+-Sẽ không có nhiều hơn 5-10 câu hỏi.
+-Chương trình đưa ra danh sách gợi ý từ cơ sở dữ liệu dựa trên thông số kỹ thuật của người dùng.
+
+Chi tiết triển khai:
+-Tạo các chức năng cho các loại thông số kỹ thuật máy tính xách tay khác nhau
+-Thiết lập các biến toàn cục có thể đóng vai trò là cờ dựa trên đầu vào của người dùng
+-Sử dụng các câu lệnh điều kiện lồng nhau bên dưới câu lệnh if-else phân chia chương trình giữa người dùng máy tính mới và người dùng máy tính có kinh nghiệm (ví dụ: if? new#1: other? exp#2).
+-Theo dõi có bao nhiêu người đã sử dụng chương trình này thông qua hệ thống đếm trong mã chào mừng.
 '''
 ###LIBRARIES###
 'TO BE DECIDED'
+'ĐƯỢC QUYẾT ĐỊNH'
 
 ###GLOBAL VARIABLES###
 
-user_id = 0 #default case
-user_name = ""	#placeholder for the name of the user
-user_type = None #default case; determines if user is new, average, or experienced
-user_input = ""	#placeholder for any input strings from the user
-user_app = None #default case; determines what the user would be using the laptop for
+user_id = 0 #default case (trường hợp mặc định)
+user_name = ""	#placeholder for the name of the user (giữ chỗ cho tên của người dùng)
+user_type = None #default case; determines if user is new, average, or experienced (trường hợp default; xác định xem người dùng là mới, trung bình hay có kinh nghiệm)
+user_input = ""	#placeholder for any input strings from the user (trình giữ chỗ cho bất kỳ chuỗi đầu vào nào từ người dùng)
+user_app = None #default case; determines what the user would be using the laptop for (trường hợp default; xác định những gì người dùng sẽ sử dụng máy tính xách tay cho)
 
 budget = None #default case, $300
 prompt_fin = 0 #default case, 0=continue prompting, 1=finish prompting
@@ -53,10 +69,10 @@ def greeting():
 	global user_id
 	global user_name
 	
-	print("Hello there! This is a laptop-recommendation service designed to personally help you find the right laptop that fits your needs.")
-	user_name=input("Before we dive into the details, what's your name?\n>>>")
+	print("Xin chào! Đây là dịch vụ đề xuất máy tính xách tay giúp cá nhân bạn tìm đúng máy tính xách tay phù hợp với nhu cầu của bản thân.")
+	user_name=input("Trước khi chúng tôi đi vào chi tiết, tên của bạn là gì?\n>>>")
 	#user_id+=1
-	print("It's a pleasure to meet you, " +user_name+ ", we hope we can help you find the kind of laptop you want.\n")
+	print("Hân hạnh được gặp bạn, " +user_name+ ", chúng tôi hy vọng có thể giúp bạn tìm được loại máy tính xách tay bạn muốn.\n")
 	#print(user_id)
 
 #Wanna smash us?
@@ -77,40 +93,40 @@ def confidence_lvl_int():
 	global confidence
 	while(confidence==None):
 		try:
-			confidence=int(input("On a scale of 0 to 10, how familiar are you with laptops and their specs in general?\n>>>"))
+			confidence=int(input("Trên thang điểm từ 0 đến 10, bạn quen thuộc với máy tính xách tay và thông số kỹ thuật của chúng nói chung đến mức nào?\n>>>"))
 		except:
-			print("We're sorry, but we don't understand what you mean, " +user_name+". Please type a number.")
+			print("Chúng tôi xin lỗi, nhưng chúng tôi không hiểu ý của bạn, " +user_name+". Vui lòng nhập lại số.")
 
 #5 prompts based on level of experience for users.
 #Used for type_user(); see below
 def test_user_newbie():
 	global user_type
 	user_type=0
-	print("\nIt's alright, knowing nothing is a start for knowing something, and that's why we're here to help you out and keep things simple as possible.\n")
+	print("\nKhông sao cả, không biết gì là bước khởi đầu để biết điều gì đó và đó là lý do tại sao chúng tôi ở đây để giúp bạn và giữ mọi thứ đơn giản nhất có thể.\n")
 	return user_type
 
 def test_user_average():
 	global user_type
 	user_type=1
-	print("\nSweet, we'll try to keep things simple for you.\n")
+	print("\nTuyệt vời, chúng tôi sẽ cố gắng giữ mọi thứ đơn giản cho bạn.\n")
 	return user_type
 
 def test_user_experienced():
 	global user_type
 	user_type=2
-	print("\nAwesome, we'll take into account more precise details to fine tune the perfect laptop for you as we do this.\n")
+	print("\nTuyệt vời, chúng tôi sẽ xem xét các chi tiết chính xác hơn để tinh chỉnh máy tính xách tay hoàn hảo cho bạn khi chúng tôi thực hiện việc này.\n")
 	return user_type
 
 def test_user_hopeless():
 	global user_type
 	user_type=0
-	print("\nDon't worry, we're here to help people like yourself get started on the right foot.\n")
+	print("\nĐừng lo lắng, chúng tôi ở đây để giúp những người như bạn bắt đầu đi đúng hướng.\n")
 	return user_type
 
 def test_user_narcissistic():
 	global user_type
 	user_type=2
-	print("\nWe admire your confidence. We aim to please you then.\n")
+	print("\nChúng tôi ngưỡng mộ sự tự tin của bạn. Chúng tôi mong muốn làm hài lòng bạn sau đó.\n")
 	return user_type
 
 # The type of user
@@ -142,20 +158,20 @@ def type_user():
 		elif (confidence<0):
 			test_user_hopeless()
 		else:
-			print("We're sorry, but we don't understand what you mean, " +user_name+". Please type a number.")
+			print("Chúng tôi xin lỗi, nhưng chúng tôi không hiểu ý của bạn, " +user_name+". Vui lòng nhập lại số.")
 	return user_type
 
 #Print statements for application type options
 #Used for application(); see below	
 def application_print_options():
 	global user_name
-	print("Alright, "+user_name+", the most important question that we can ask you now is this: what do you intend on using this laptop for?")
-	print("Here is a selection of five options for you to pick from:") 
-	print("Option 1: Gaming")
-	print("Option 2: Office/School work")
-	print("Option 3: Advanced Projects (including video-editing, drawing, program development, etc.)")
-	print("Option 4: Light usage/general documentation (family/friends photos and videos, filing taxes, reading E-books, etc.).")
-	print("Option 5: Other/Unspecified (We would choose from a general standard of laptops if none of the above options fit your criteria)\n")
+	print("OK, "+user_name+", câu hỏi quan trọng nhất mà chúng tôi có thể hỏi bạn bây giờ là: bạn định sử dụng chiếc máy tính xách tay này để làm gì?")
+	print("Dưới đây là 1 lựa chọn trong số 5 tùy chọn để bạn chọn:") 
+	print("Option 1: Trò chơi điện tử")
+	print("Option 2: Công việc văn phòng/trường học")
+	print("Option 3: Dự án nâng cao (bao gồm chỉnh sửa video, vẽ, phát triển chương trình, v.v.)")
+	print("Option 4: Sử dụng nhẹ/tài liệu chung (ảnh và video của gia đình/bạn bè, khai thuế, đọc sách điện tử, v.v.).")
+	print("Option 5: Khác/Không xác định (Chúng tôi sẽ chọn từ tiêu chuẩn chung của máy tính xách tay nếu không có tùy chọn nào ở trên phù hợp với tiêu chí của bạn)\n")
 
 #Application
 #What will the user be using the laptop for?
@@ -169,13 +185,13 @@ def application():
 	while(flag==False):
 		while(user_app==None):
 				try:
-					user_app=int(input("Please pick and type one of the five options (1, 2, 3, 4, or 5).\n>>>"))
+					user_app=int(input("Vui lòng chọn và nhập 1 trong 5 tùy chọn (1, 2, 3, 4, or 5).\n>>>"))
 				except:
-					print("We're sorry, but we can't understand what you mean by that, " +user_name+". Please make sure you are typing a number.")
+					print("Chúng tôi xin lỗi, nhưng chúng tôi không thể hiểu ý của bạn là gì, " +user_name+". Hãy chắc chắn rằng bạn đang gõ 1 trong 5 số.")
 		#Laptop_purpose will be used later for the closing().
 		laptop_purpose=user_app
 		if(user_app<1) or (user_app>5):
-			print("We apologize, but that is not a valid input.")
+			print("Chúng tôi xin lỗi, nhưng đó không phải là một đầu vào hợp lệ.")
 			user_app=None
 		else:
 			#Make user_app set to gamer regardless if they are option 3 (most specs for gamers would apply to advanced projects)
@@ -196,11 +212,11 @@ def gamer_user_budget():
 	if (user_app==1):
 		while(budget==None):
 			try:
-				budget=int(input("What is the maximum amount of money you are willing to spend on a laptop?\nAccepted price range is from $350 to $6500.\n(NOTE: Most laptops generally cost around $3425)\n>>>").replace(',','').replace('$',''))
+				budget=int(input("Số tiền tối đa bạn sẵn sàng chi cho một chiếc máy tính xách tay là bao nhiêu?\nPhạm vi giá được chấp nhận là từ $350 đến $6500.\n(LƯU Ý: Hầu hết các máy tính xách tay thường có giá khoảng $3425)\n>>>").replace(',','').replace('$',''))
 			except:
-				print("We're sorry, but we don't understand what you mean, " +user_name+". Please type a number.")
+				print("Chúng tôi xin lỗi, nhưng chúng tôi không hiểu ý của bạn, " +user_name+". Vui lòng nhập lại số.")
 		if (budget<350) or (budget>6500):
-			print("We don't have any products that will fit that budget.")
+			print("Chúng tôi không có bất kỳ sản phẩm nào phù hợp với ngân sách đó.")
 			budget=None
 		else:
 			return True
@@ -212,11 +228,11 @@ def study_user_budget():
 	if (user_app==2):
 		while(budget==None):
 			try:
-				budget=int(input("What is the maximum amount of money you are willing to spend on a laptop?\nAccepted price range is from $150 to $2500.\n(NOTE: Most laptops generally cost around $1325)\n>>>").replace(',','').replace('$',''))
+				budget=int(input("Số tiền tối đa bạn sẵn sàng chi cho một chiếc máy tính xách tay là bao nhiêu?\nPhạm vi giá được chấp nhận là từ $150 đến $2500.\n(LƯU Ý: Hầu hết các máy tính xách tay thường có giá khoảng $1325)\n>>>").replace(',','').replace('$',''))
 			except:
-				print("We're sorry, but we don't understand what you mean, " +user_name+". Please type a number.")
+				print("Chúng tôi xin lỗi, nhưng chúng tôi không hiểu ý của bạn, " +user_name+". Vui lòng nhập lại số.")
 		if (budget<150) or (budget>2500):
-			print("We don't have any products that will fit that budget.")
+			print("Chúng tôi không có bất kỳ sản phẩm nào phù hợp với ngân sách đó.")
 			budget=None
 		else:
 			return True
@@ -226,7 +242,7 @@ def study_user_budget():
 def budget_amount():
 	global budget
 	flag = False	#Used for breaking out of while loop
-	print("\nAwesome! The next thing we need to know now is your budget.")
+	print("\nThật tuyệt vời! Điều tiếp theo chúng tôi cần biết bây giờ là ngân sách của bạn.")
 	while (flag==False):
 		#Gamer user
 		if (gamer_user_budget()==True):
@@ -239,12 +255,12 @@ def budget_amount():
 #Print statements for displaying screen size options
 #Used for screen_size(); see below
 def screen_size_print_options():
-	print("\nAlright, now the next thing we need to consider is how big you want your screen to be.\n")
-	print("You have three options to choose from:")
-	print("Option 1: 11.6\" to 13.5\". This is considered small and is useful for on the move users who like something portable.")
-	print("Option 2: 13.6\" to 15.4\". This is considered medium and is useful for general use, including watching movies, office/school work, and gaming")
-	print("Option 3: 15.5\" to 17.3\". This is considered large and is practical for stationary users and/or people who have difficulty with vision. Ideal for intensive gaming, video editing, art, or any projects.")
-	print("Option 4: 17.3\" to 18.4\". This is considered very large and is practically a portable desktop. However, its extra large size makes it difficult to transport, though it is useful for intensive gaming, large-scale projects that require a lot of visuals, or a cinematic movie watching experience.\n")
+	print("\nĐược rồi, điều tiếp theo chúng ta cần xem xét là bạn muốn màn hình của mình lớn đến mức nào.\n")
+	print("Bạn có 3 tùy chọn để chọn:")
+	print("Option 1: 11.6\" to 13.5\". Đây được coi là nhỏ và hữu ích cho những người dùng hay di chuyển, những người thích thứ gì đó di động.")
+	print("Option 2: 13.6\" to 15.4\". Đây được coi là mức trung bình và hữu ích cho mục đích sử dụng chung, bao gồm xem phim, công việc văn phòng/trường học và chơi game")
+	print("Tùy chọn 3: 15,5\" đến 17,3\". Giá trị này được coi là lớn và thiết thực cho người dùng cố định và/hoặc những người gặp khó khăn về thị lực. Lý tưởng để chơi game cường độ cao, chỉnh sửa video, nghệ thuật hoặc bất kỳ dự án nào.")
+	print("Option 4: 17.3\" to 18.4\". Đây được coi là rất lớn và thực tế là một máy tính để bàn di động. Tuy nhiên, kích thước cực lớn của nó gây khó khăn cho việc vận chuyển, mặc dù nó rất hữu ích cho các dự án quy mô lớn, chơi game chuyên sâu yêu cầu nhiều hình ảnh hoặc trải nghiệm xem phim điện ảnh.\n")
 
 #Screen size
 #How big does the user want their screen to be?
@@ -257,11 +273,11 @@ def screen_size():
 	while(flag==False):
 		while(dim_screen==None):
 				try:
-					dim_screen=int(input("Please pick and type one of the four options (1 for small, 2 for medium, 3 for large, 4 for very large)\n>>>"))
+					dim_screen=int(input("Vui lòng chọn và nhập 1 trong 4 tùy chọn (1 nhỏ, 2 vừa, 3 lớn, 4 rất lớn)\n>>>"))
 				except:
-					print("We're sorry, but we can't understand what you mean by that, " +user_name+". Please make sure you are typing a number.")
+					print("Chúng tôi xin lỗi, nhưng chúng tôi không thể hiểu ý bạn là gì, " +user_name+". Hãy chắc chắn rằng bạn đang gõ một số.")
 		if(dim_screen<1) or (dim_screen>4):
-			print("We apologize, but that is not a valid input.")
+			print("Chúng tôi xin lỗi, nhưng đó không phải là một đầu vào hợp lệ.")
 			dim_screen=None
 		else:
 			flag=True
@@ -270,12 +286,12 @@ def screen_size():
 #Print statements for displaying storage size options
 #Used for storage_size(); see below
 def storage_size_print_options():
-	print("\n Good, then the next thing to calculate is how much storage space you want your laptop to have.\n")
-	print("You have three options to choose from:")
-	print("Option 1: 64GB to 256GB. This is considered small and is useful for storing notes, pictures, short videos, and a few low-intensive games. This is generally meant for people who do not plan on storing a lot of information on their device. Good for use in the span of less than five years.")
-	print("Option 2: 256GB to 512GB. This is considered medium and is useful for general use, including watching movies, office/school work involving a lot of documents and files, and gaming. Good for use in the span of five to ten years.")
-	print("Option 3: 512GB and above. This is considered large and is ideal for intensive gaming, video editing, art, or any large-scale projects. Please note that this means that laptops with this much storage space are much more expensive. Good for use for over ten years generally.\n")
-	print("Computer Terms: MB= megabyte, GB= gigabyte, TB= terabyte\nMB < GB < TB\nThere are 1000MB in 1GB; 1000GB in 1TB\n")
+	print("\n Tốt, điều tiếp theo cần tính toán là bạn muốn máy tính xách tay của mình có bao nhiêu dung lượng lưu trữ.\n")
+	print("Bạn có 3 tùy chọn để chọn:")
+	print("Tùy chọn 1: 64GB đến 256GB. Dung lượng này được coi là nhỏ và hữu ích để lưu trữ ghi chú, ảnh, video ngắn và một vài trò chơi cường độ thấp. Dung lượng này thường dành cho những người không có kế hoạch lưu trữ nhiều thông tin trên thiết bị của họ. Tốt để sử dụng trong khoảng thời gian dưới năm năm.")
+	print("Tùy chọn 2: 256GB đến 512GB. Đây được coi là dung lượng trung bình và hữu ích cho mục đích sử dụng chung, bao gồm xem phim, công việc văn phòng/trường học liên quan đến nhiều tài liệu và tệp cũng như chơi game. Tốt để sử dụng trong khoảng thời gian từ 5 đến 10 năm.")
+	print("Tùy chọn 3: 512GB trở lên. Dung lượng này được coi là lớn và lý tưởng để chơi game chuyên sâu, chỉnh sửa video, nghệ thuật hoặc bất kỳ dự án quy mô lớn nào. Xin lưu ý rằng điều này có nghĩa là máy tính xách tay có nhiều dung lượng lưu trữ này đắt hơn nhiều. Tốt để sử dụng trong hơn mười năm nói chung.\n")
+	print("Thuật ngữ máy tính: MB= megabyte, GB= gigabyte, TB= terabyte\nMB < GB < TB\nCó 1000MB trong 1GB; 1000GB trong 1TB\n")
 
 
 #Storage capacity
@@ -289,11 +305,11 @@ def storage_size():
 	while(flag==False):
 		while(storage_cap==None):
 				try:
-					storage_cap=int(input("Please pick and type one of the three options (1 for small, 2 for medium, 3 for large)\n>>>"))
+					storage_cap=int(input("Vui lòng chọn và nhập 1 trong 3 tùy chọn (1 nhỏ, 2 vừa, 3 lớn)\n>>>"))
 				except:
-					print("We're sorry, but we can't understand what you mean by that, " +user_name+". Please make sure you are typing a number.")
+					print("Chúng tôi xin lỗi, nhưng chúng tôi không thể hiểu ý bạn là gì, " +user_name+". Hãy chắc chắn rằng bạn đang gõ một số.")
 		if(storage_cap<1) or (storage_cap>3):
-			print("We apologize, but that is not a valid input.")
+			print("Chúng tôi xin lỗi, nhưng đó không phải là một đầu vào hợp lệ.")
 			storage_cap=None
 		else:
 			flag=True
@@ -301,14 +317,14 @@ def storage_size():
 #Print statements for displaying RAM options
 #Used for RAM_capacity(); see below
 def RAM_print_options():
-	print("\nNow the next thing to do is to understand and choose how much RAM you want your laptop to have.\n")
-	print("RAM stands for Random-Access Memory. People sometimes confuse RAM with storage space because both of them use GB as a unit of measurement.")
-	print("RAM determines how many programs you can be running at the same time. Think of it like a desk: if you have a lot of desk space (i.e. a large amount of RAM), you have a lot more space to spread out your papers and read them all at once.\nOn the other hand, if you have a small amount of desk space (i.e. a small amount of RAM), you have less space to look at your papers and have to be selective about which ones to read at a time.\n IN OTHER WORDS: RAM determines how well you can multi-task on your laptop at one time.\n")
-	print("You have three options to choose from:")
-	print("Option 1: 4GB. This is a small amount of RAM that enables you to do a few tasks at a time. It is meant for low-intensity work and usage (you can still watch movies or use this for work, but you may experience slowdown.")
-	print("Option 2: 8GB. This is a decent amount of RAM that allows for more tasks to be done at once. It gets a majority of jobs done and is reliable all-around. Still, not ideal for gaming purposes and is mostly meant for work.")
-	print("Option 3: 16GB. This is a standard amount of RAM that lets you to do work on various tasks on a daily basis. It's a good all-rounder, perfectly capable for gaming, work, and is a recommended amount for most users.")
-	print("Option 4: 32GB and above. This is an exceptional amount of RAM that is generally more expensive than its 16GB counterpart, but is greatly ideal for people specializing in a specific work field that demands a great deal of power and energy for use. Think of this like a workbench for a craftsman. It also makes for a fantastic gaming laptop.\n")
+	print("\nBây giờ, việc tiếp theo cần làm là hiểu và chọn dung lượng RAM mà bạn muốn máy tính xách tay của mình có.\n")
+	print("RAM là viết tắt của Random-Access Memory. Đôi khi mọi người nhầm lẫn RAM với dung lượng lưu trữ vì cả hai đều sử dụng GB làm đơn vị đo lường.")
+	print("RAM quyết định bạn có thể chạy bao nhiêu chương trình cùng lúc. Hãy coi nó giống như một cái bàn: nếu bạn có nhiều không gian trên bàn làm việc (tức là một lượng lớn RAM), thì bạn sẽ có nhiều không gian hơn để trải ra giấy tờ của bạn và đọc tất cả chúng cùng một lúc.\nMặt khác, nếu bạn có ít không gian trên bàn làm việc (tức là dung lượng RAM nhỏ), thì bạn sẽ có ít không gian hơn để xem giấy tờ của mình và phải chọn lọc xem cái nào để đọc cùng một lúc.\n NÓI CÁCH KHÁC: RAM xác định mức độ bạn có thể thực hiện nhiều tác vụ trên máy tính xách tay của mình cùng một lúc.\n")
+	print("Bạn có 3 tùy chọn để chọn:")
+	print("Option 1: 4GB. Đây là dung lượng RAM nhỏ cho phép bạn thực hiện một số tác vụ cùng lúc. Nó dành cho công việc và sử dụng cường độ thấp (bạn vẫn có thể xem phim hoặc sử dụng cho công việc, nhưng bạn có thể bị chậm lại.")
+	print("Tùy chọn 2: 8GB. Đây là dung lượng RAM phù hợp cho phép thực hiện nhiều tác vụ hơn cùng một lúc. Nó hoàn thành phần lớn công việc và đáng tin cậy. Tuy nhiên, không lý tưởng cho mục đích chơi game và chủ yếu là dành cho công việc.")
+	print("Tùy chọn 3: 16GB. Đây là dung lượng RAM tiêu chuẩn cho phép bạn thực hiện nhiều tác vụ khác nhau hàng ngày. Đây là dung lượng RAM tốt toàn diện, hoàn toàn có khả năng chơi game, làm việc và là dung lượng được khuyên dùng cho hầu hết người dùng.")
+	print("Tùy chọn 4: 32GB trở lên. Đây là dung lượng RAM đặc biệt thường đắt hơn so với đối tác 16GB, nhưng rất lý tưởng cho những người chuyên về một lĩnh vực công việc cụ thể đòi hỏi nhiều năng lượng và năng lượng để sử dụng . Hãy nghĩ đây giống như một chiếc bàn làm việc dành cho thợ thủ công. Nó cũng là một chiếc máy tính xách tay chơi game tuyệt vời.\n")
 
 def RAM_capacity():
 	global user_name
@@ -319,11 +335,11 @@ def RAM_capacity():
 	while(flag==False):
 		while(RAM==None):
 				try:
-					RAM=int(input("Please pick and type one of the four options (1 for 4GB, 2 for 8GB, 3 for 16GB, 4 for 32GB and above)\n>>>"))
+					RAM=int(input("Vui lòng chọn và nhập 1 trong 4 tùy chọn (1 cho 4GB, 2 cho 8GB, 3 cho 16GB, 4 cho 32GB trở lên)\n>>>"))
 				except:
-					print("We're sorry, but we can't understand what you mean by that, " +user_name+". Please make sure you are typing a number.")
+					print("Chúng tôi xin lỗi, nhưng chúng tôi không thể hiểu ý bạn là gì, " +user_name+". Hãy chắc chắn rằng bạn đang gõ một số.")
 		if(RAM<1) or (RAM>4):
-			print("We apologize, but that is not a valid input.")
+			print("Chúng tôi xin lỗi, nhưng đó không phải là một đầu vào hợp lệ.")
 			RAM=None
 		else:
 			flag=True
@@ -337,19 +353,27 @@ def RAM_capacity():
 #Storage (would they like a lot of storage space)
 #Ram (how powerful do they need their laptops to be)
 
+#Prompts dành riêng cho người dùng mới, thiếu kinh nghiệm.
+#Phải được chia thành:
+#Ngân sách
+#Ứng dụng (họ đang sử dụng máy tính xách tay để làm gì)
+#Kích thước màn hình (họ sẽ di chuyển nhiều hay ở yên một chỗ)
+#Storage (họ có muốn nhiều không gian lưu trữ không)
+#Ram (họ cần máy tính xách tay của họ mạnh đến mức nào)
+
 def laptop_purpose_closing():
 	global laptop_purpose
 	global laptop_purpose_print
 	if (laptop_purpose==1):
-		laptop_purpose_print="1- Gaming"
+		laptop_purpose_print="1- Trò chơi điện tử"
 	elif(laptop_purpose==2):
-		laptop_purpose_print="2- Office/School work"
+		laptop_purpose_print="2- Công việc văn phòng/trường học"
 	elif(laptop_purpose==3):
-		laptop_purpose_print="3- Advanced Projects"
+		laptop_purpose_print="3- Dự án nâng cao"
 	elif(laptop_purpose==4):
-		laptop_purpose_print="4- Light Usage/General Documentation"
+		laptop_purpose_print="4- Sử dụng nhẹ/Tài liệu chung"
 	else:
-		laptop_purpose_print="5- Other/Unspecified"
+		laptop_purpose_print="5- Khác/Không xác định"
 	return (laptop_purpose_print)
 
 def budget_closing():
@@ -377,7 +401,7 @@ def storage_size_closing():
 	elif(storage_cap==2):
 		storage_size_print_closing="2- 256GB to 512GB"
 	else:
-		storage_size_print_closing="3- 512GB and above"
+		storage_size_print_closing="3- >= 512GB"
 	return (storage_size_print_closing)
 
 def RAM_capacity_closing():
@@ -397,13 +421,13 @@ def closing():
 	flag=False
 	recheck_flag=False
 	
-	print("\nThank you so much for your answers, " + user_name + "! Here is a record of your inputs, and we want to make sure we got your answers right. Please look over your answers and tell us if you want to change anything before we offer our recommendations.\n")
+	print("\nCảm ơn bạn rất nhiều vì câu trả lời của bạn, " + user_name + "! Đây là bản ghi các thông tin đầu vào của bạn và chúng tôi muốn đảm bảo rằng chúng tôi đã nhận được câu trả lời đúng của bạn. Vui lòng xem qua câu trả lời của bạn và cho chúng tôi biết nếu bạn muốn thay đổi bất cứ điều gì trước khi chúng tôi đưa ra đề xuất của mình.\n")
 	
-	print("(1)Laptop Purpose: " + laptop_purpose_closing())
-	print("(2)Budget: $" + budget_closing())
-	print("(3)Screen Size: " + screen_size_closing())
-	print("(4)Storage Size: " + storage_size_closing())
-	print("(5)RAM Capacity: " + RAM_capacity_closing())
+	print("(1)Mục đích máy tính: " + laptop_purpose_closing())
+	print("(2)Ngân sách: $" + budget_closing())
+	print("(3)Kích thước màn hình: " + screen_size_closing())
+	print("(4)Dung lượng lưu trữ: " + storage_size_closing())
+	print("(5)Dung lượng RAM: " + RAM_capacity_closing())
 	'''
 	print (user_name)
 	print (confidence)
@@ -415,15 +439,15 @@ def closing():
 	print (RAM)
 	'''
 	while (flag==False):
-		end_prompt=input("\nDid we get it right? (Y\\N)\n>>>")
+		end_prompt=input("\nXác nhận đúng thông tin (Y\\N)\n>>>")
 		if (end_prompt=="Y") or (end_prompt=="y"):
-			print("Awesome.")
+			print("Thật tuyệt vời.")
 			flag=True
 		elif (end_prompt=="N") or (end_prompt=="n"):
-			print("Shoot, we're extremely sorry. Please reload the program to re-input answers")
+			print("Chúng tôi vô cùng xin lỗi. Vui lòng tải lại chương trình để nhập lại câu trả lời")
 			flag=True
 		else:
-			print("Sorry, we didn't quite catch that. Please type 'Y' or 'N'.")
+			print("Xin lỗi, đầu vào không hợp lệ. vui lòng gõ 'Y' or 'N'.")
 
 ###MAIN FUNCTION###
 
@@ -433,7 +457,7 @@ def main():
 	type_user()
 	#if the user is experienced at laptops
 	if (type_user()==2):
-		print("EXPERIENCED USER")
+		print("Người dùng có kinh nghiệm")
 		application()
 		b = budget_amount() # return budget
 		ss = screen_size() # returns dim_screen
@@ -442,7 +466,7 @@ def main():
 		closing()
 	#if the user is average at laptops
 	elif (type_user()==1):
-		print("AVERAGE USER")
+		print("Người dùng ở mức trung bình")
 		application()
 		b = budget_amount()
 		ss = screen_size()
@@ -451,7 +475,7 @@ def main():
 		closing()
 	#if the user is new at laptops
 	else:
-		print("NEW USER")
+		print("Người dùng mới")
 		application()
 		b = budget_amount()
 		ss = screen_size()
