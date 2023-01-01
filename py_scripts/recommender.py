@@ -107,9 +107,9 @@ top_10 = get_top_10(subset)
 top_10_weight=get_top_10_weight(subset)
 if user.sex==1:
    if len(top_10) == 0:
-      print("Sorry, we do not have any products that match up to what you are looking for :c")
+      print("Rất tiếc, chúng tôi không có sản phẩm nào phù hợp với những gì bạn đang tìm kiếm")
    else:
-      print("Alright, after considering all the factors that you answered for us, we decided on this list of the top " + str(len(top_10)) + " laptops best suited for you!\n")
+      print("Sau khi xem xét tất cả các yếu tố mà bạn đã trả lời cho chúng tôi, chúng tôi đã quyết định chọn danh sách " + str(len(top_10)) + " máy tính xách tay phù hợp nhất cho bạn trong danh sách này!\n")
       top_10.to_csv('../data/nam.csv')
       n = 1
       for i in top_10.index:
@@ -117,9 +117,9 @@ if user.sex==1:
          n += 1
 else:
     if len(top_10_weight) == 0:
-      print("Sorry, we do not have any products that match up to what you are looking for :c")
+      print("Rất tiếc, chúng tôi không có sản phẩm nào phù hợp với những gì bạn đang tìm kiếm")
     else:
-      print("Alright, after considering all the factors that you answered for us, we decided on this list of the top " + str(len(top_10_weight)) + " laptops best suited for you!\n")
+      print("Sau khi xem xét tất cả các yếu tố mà bạn đã trả lời cho chúng tôi, chúng tôi đã quyết định chọn danh sách " + str(len(top_10_weight)) + " máy tính xách tay phù hợp nhất cho bạn trong danh sách này!\n")
       top_10_weight.to_csv('../data/nu.csv')
       n = 1
       for i in top_10_weight.index:
