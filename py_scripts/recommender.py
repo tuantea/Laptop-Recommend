@@ -78,16 +78,7 @@ for r in list(subset.index):
      subset.loc[r, 'memory_score'] = get_memory_score(subset, r)
      subset.loc[r, 'screen_score'] = get_screen_score(subset, r)
      subset.loc[r, 'total_score'] = sum(subset.loc[r, 'price_score':'screen_score'])
-     subset.to_csv('user.csv')
-with open('../data/user.csv', 'w') as f:
-    fieldnames = [ 'name','price', 'brand','rating', 'cpu_type','cpu_speed', 'cores','storage','memory', 'gpu_type','gpu_memory', 'screen','price_score','rating_score', 'cpu_speed_score','core_score', 'storage_score','memory_score','screen_score', 'total_score']
-    writer = csv.DictWriter(f, subset.keys())
-    # writer.writerow(subset.price)
-    writer.writeheader()
-    subset.to_csv
-    # for i in subset.index-1:
-    #     writer.writerows({subset.name[i+1],subset.price[i+1],subset.brand[i+1],subset.rating[i+1],subset.cpu_type[i+1],subset.cpu_speed[i+1],subset.cores[i+1],subset.storage[i+1],subset.memory[i+1],subset.gpu_type[i+1],subset.gpu_memory[i+1],subset.screen[i+1],subset.price_score[i+1],subset.rating_score[i+1],subset.cpu_speed_score[i+1],subset.core_score[i+1],subset.storage_score[i+1],subset.memory_score[i+1],subset.screen_score[i+1],subset.total_score[i+1]})
-
+    #  subset.to_csv('user.csv')
 # output the results
 top_10 = get_top_10(subset)
 
