@@ -32,6 +32,7 @@ dim_screen = None #default case, determines dimensions of screen.
 laptop_purpose = None #default case, original answer of what the user would be using the laptop for in user_app; utilized in closing()
 RAM = None #default case, determines how much RAM a laptop must have.
 storage_cap = None #default case, determines how much storage a laptop must have.
+sex = None# 1: Nam, 2: Nữ
 
 #Placeholder statements used in closing functions.
 laptop_purpose_print = ""
@@ -39,6 +40,7 @@ budget_print = ""
 screen_size_print_closing = ""
 storage_size_print_closing = ""
 RAM_capacity_print_closing = ""
+sex_print= ""
 
 rating = 0 #default case, will be divided into 3 groups: none → 2, 3 → 5)
 
@@ -59,16 +61,24 @@ def greeting():
 	print("It's a pleasure to meet you, " +user_name+ ", we hope we can help you find the kind of laptop you want.\n")
 	#print(user_id)
 
-#Wanna smash us?
-def smash():
-	sex=input("If you're horny and want sum fuck, wanna smash?(Y\\N)")
-	if (sex=="Y"):
-		print("I'll bend over ;)")
-	elif (sex=="N"):
-		print("You don't have a choice. Bend over.")
-	else:
-		print("Pity. Go touch yourself then, perv.")
+#Hỏi về giới tính
+def question_sex():
 
+	global sex
+
+	print("Bây giờ, hãy cho tôi biết giới tính của bạn là gì?\n")
+
+	while(sex==None):
+		try:
+			sex=int(input("Giới tính(1:Nam, 2: Nữ):\n>>>"))	
+			if (sex == 1) or (sex==2): 
+				break
+			else:
+				print("Chúng tôi xin lỗi, nhưng chúng tôi không hiểu ý của bạn," +user_name+". Vui lòng nhập lại giới tính\n")
+				sex = None
+		except:
+			print("Chúng tôi xin lỗi, nhưng chúng tôi không hiểu ý của bạn," +user_name+". Vui lòng nhập lại giới tính\n>>>.")
+	return sex
 
 #Prompt user for how confident/familiar they are with laptops and their specs.
 # Is confidence level correctly inputted as an integer?
@@ -337,6 +347,15 @@ def RAM_capacity():
 #Storage (would they like a lot of storage space)
 #Ram (how powerful do they need their laptops to be)
 
+def question_sex_closing():
+	global sex
+	global sex_print
+	if (sex==1):
+		sex_print="Nam"
+	else:
+		sex_print="Nữ"
+	return (sex_print)
+
 def laptop_purpose_closing():
 	global laptop_purpose
 	global laptop_purpose_print
@@ -399,11 +418,12 @@ def closing():
 	
 	print("\nThank you so much for your answers, " + user_name + "! Here is a record of your inputs, and we want to make sure we got your answers right. Please look over your answers and tell us if you want to change anything before we offer our recommendations.\n")
 	
-	print("(1)Laptop Purpose: " + laptop_purpose_closing())
-	print("(2)Budget: $" + budget_closing())
-	print("(3)Screen Size: " + screen_size_closing())
-	print("(4)Storage Size: " + storage_size_closing())
-	print("(5)RAM Capacity: " + RAM_capacity_closing())
+	print("(1)Giới tính: " + question_sex_closing())
+	print("(2)Laptop Purpose: " + laptop_purpose_closing())
+	print("(3)Budget: $" + budget_closing())
+	print("(5)Screen Size: " + screen_size_closing())
+	print("(6)Storage Size: " + storage_size_closing())
+	print("(7)RAM Capacity: " + RAM_capacity_closing())
 	'''
 	print (user_name)
 	print (confidence)
@@ -428,8 +448,9 @@ def closing():
 ###MAIN FUNCTION###
 
 def main():
-	global b, ss, sc, r
+	global b, ss, sc, r, sex
 	greeting()
+	question_sex()
 	type_user()
 	#if the user is experienced at laptops
 	if (type_user()==2):
