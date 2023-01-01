@@ -48,6 +48,7 @@ dim_screen = None #default case, determines dimensions of screen.
 laptop_purpose = None #default case, original answer of what the user would be using the laptop for in user_app; utilized in closing()
 RAM = None #default case, determines how much RAM a laptop must have.
 storage_cap = None #default case, determines how much storage a laptop must have.
+sex = None# 1: Nam, 2: Nữ
 
 #Placeholder statements used in closing functions.
 laptop_purpose_print = ""
@@ -55,6 +56,7 @@ budget_print = ""
 screen_size_print_closing = ""
 storage_size_print_closing = ""
 RAM_capacity_print_closing = ""
+sex_print= ""
 
 rating = 0 #default case, will be divided into 3 groups: none → 2, 3 → 5)
 
@@ -65,6 +67,13 @@ rating = 0 #default case, will be divided into 3 groups: none → 2, 3 → 5)
 # Ask for their name
 # Introduce the user to the program
 # Increment the user_id by 1 (PROTOTYPE)
+
+# Lời chào
+# Nói xin chào với người dùng
+# Hỏi tên của họ
+# Giới thiệu người dùng về chương trình
+# Tăng user_id lên 1 (PROTOTYPE)
+
 def greeting():
 	global user_id
 	global user_name
@@ -75,20 +84,32 @@ def greeting():
 	print("Hân hạnh được gặp bạn, " +user_name+ ", chúng tôi hy vọng có thể giúp bạn tìm được loại máy tính xách tay bạn muốn.\n")
 	#print(user_id)
 
-#Wanna smash us?
-def smash():
-	sex=input("If you're horny and want sum fuck, wanna smash?(Y\\N)")
-	if (sex=="Y"):
-		print("I'll bend over ;)")
-	elif (sex=="N"):
-		print("You don't have a choice. Bend over.")
-	else:
-		print("Pity. Go touch yourself then, perv.")
+#Hỏi về giới tính
+def question_sex():
 
+	global sex
+
+	print("Bây giờ, hãy cho tôi biết giới tính của bạn là gì?\n")
+
+	while(sex==None):
+		try:
+			sex=int(input("Giới tính(1:Nam, 2: Nữ):\n>>>"))	
+			if (sex == 1) or (sex==2): 
+				break
+			else:
+				print("Chúng tôi xin lỗi, nhưng chúng tôi không hiểu ý của bạn," +user_name+". Vui lòng nhập lại giới tính\n")
+				sex = None
+		except:
+			print("Chúng tôi xin lỗi, nhưng chúng tôi không hiểu ý của bạn," +user_name+". Vui lòng nhập lại giới tính\n>>>.")
+	return sex
 
 #Prompt user for how confident/familiar they are with laptops and their specs.
 # Is confidence level correctly inputted as an integer?
 # Used for type_user(); see below
+
+#Nhắc nhở người dùng về mức độ tự tin/quen thuộc của họ với máy tính xách tay và thông số kỹ thuật của chúng.
+# Mức độ tin cậy có được nhập chính xác dưới dạng số nguyên không?
+# Dùng cho type_user(); xem bên dưới
 def confidence_lvl_int():
 	global confidence
 	while(confidence==None):
@@ -99,6 +120,8 @@ def confidence_lvl_int():
 
 #5 prompts based on level of experience for users.
 #Used for type_user(); see below
+#5 dựa trên mức độ trải nghiệm của người dùng.
+#Được sử dụng cho type_user(); xem bên dưới
 def test_user_newbie():
 	global user_type
 	user_type=0
@@ -133,28 +156,32 @@ def test_user_narcissistic():
 # Ask if they are tech savvy or not on a scale of 0-10.
 # 0-3=NEW, 4-6=AVERAGE, 7-10=EXPERIENCED
 # Lays initial pathway into new_user(), average_user(), and experienced_user()
+# Loại người dùng
+# Hỏi xem họ có hiểu biết về công nghệ hay không trên thang điểm từ 0-10.
+# 0-3=MỚI, 4-6=TRUNG BÌNH, 7-10=TRẢI NGHIỆM
+# Đặt đường dẫn ban đầu vào new_user(), average_user() và Experience_user()
 def type_user():
 	global user_name
 	global user_type
 	global confidence
 	
 	while(user_type==None):
-		#Ask for input; Is the input an integer?
+		#Ask for input; Is the input an integer? (# Yêu cầu đầu vào; Đầu vào có phải là số nguyên không?)
 		confidence_lvl_int()
 			
-		#For the newbies.
+		#For the newbies. (#Dành cho người mới.)
 		if (confidence<=3) and (confidence>=0):
 			test_user_newbie()
-		#For the average.
+		#For the average. (#Đối với mức trung bình.)
 		elif (confidence>=4) and (confidence<=6):
 			test_user_average()
-		#For the experienced.
+		#For the experienced. (#Dành cho người có kinh nghiệm.)
 		elif (confidence>=7) and (confidence<=10):
 			test_user_experienced()
-		#For the real smartasses.
+		#For the real smartasses. (#Đối với những người thông minh thực sự.)
 		elif (confidence>=11):
 			test_user_narcissistic()
-		#For anyone who is just somehow negative.
+		#For anyone who is just somehow negative. (#Dành cho bất kỳ ai chỉ tiêu cực bằng cách nào đó.)
 		elif (confidence<0):
 			test_user_hopeless()
 		else:
@@ -163,6 +190,8 @@ def type_user():
 
 #Print statements for application type options
 #Used for application(); see below	
+#Print câu lệnh cho các tùy chọn loại ứng dụng
+#Được sử dụng cho application(); xem bên dưới
 def application_print_options():
 	global user_name
 	print("OK, "+user_name+", câu hỏi quan trọng nhất mà chúng tôi có thể hỏi bạn bây giờ là: bạn định sử dụng chiếc máy tính xách tay này để làm gì?")
@@ -175,6 +204,8 @@ def application_print_options():
 
 #Application
 #What will the user be using the laptop for?
+#Đăng kí
+#Người dùng sẽ sử dụng máy tính xách tay để làm gì?
 def application():
 	global user_name
 	global user_app
@@ -205,6 +236,9 @@ def application():
 #Two different prompts based on what the user would be using the laptop for.
 #Reminder: user_app==1 means gaming; 2 means study.
 #Used for budget_range(); see below
+#Hai lời nhắc khác nhau dựa trên mục đích sử dụng máy tính xách tay của người dùng.
+#Reminder: user_app==1 nghĩa là chơi game; 2 nghĩa là học.
+#Được sử dụng cho budget_range(); xem bên dưới
 def gamer_user_budget():
 	global budget
 	global user_name
@@ -239,6 +273,8 @@ def study_user_budget():
 
 #Budget range
 #Determine how much money the user is willing to spend.
+#Phạm vi ngân sách
+#Xác định số tiền mà người dùng sẵn sàng chi tiêu.
 def budget_amount():
 	global budget
 	flag = False	#Used for breaking out of while loop
@@ -254,6 +290,8 @@ def budget_amount():
 
 #Print statements for displaying screen size options
 #Used for screen_size(); see below
+#Print câu lệnh để hiển thị các tùy chọn kích thước màn hình
+#Được sử dụng cho screen_size(); xem bên dưới
 def screen_size_print_options():
 	print("\nĐược rồi, điều tiếp theo chúng ta cần xem xét là bạn muốn màn hình của mình lớn đến mức nào.\n")
 	print("Bạn có 3 tùy chọn để chọn:")
@@ -264,6 +302,8 @@ def screen_size_print_options():
 
 #Screen size
 #How big does the user want their screen to be?
+#Kích thước màn hình
+#Người dùng muốn màn hình của họ lớn đến mức nào?
 def screen_size():
 	global user_name
 	global dim_screen
@@ -285,6 +325,8 @@ def screen_size():
 
 #Print statements for displaying storage size options
 #Used for storage_size(); see below
+#Print câu lệnh để hiển thị các tùy chọn kích thước bộ nhớ
+#Được sử dụng cho storage_size(); xem bên dưới
 def storage_size_print_options():
 	print("\n Tốt, điều tiếp theo cần tính toán là bạn muốn máy tính xách tay của mình có bao nhiêu dung lượng lưu trữ.\n")
 	print("Bạn có 3 tùy chọn để chọn:")
@@ -296,6 +338,8 @@ def storage_size_print_options():
 
 #Storage capacity
 #How much space does the user want their laptop to have?
+#Khả năng lưu trữ
+#Người dùng muốn máy tính xách tay của họ có bao nhiêu dung lượng?
 def storage_size():
 	global user_name
 	global storage_cap
@@ -316,6 +360,8 @@ def storage_size():
 	return storage_cap
 #Print statements for displaying RAM options
 #Used for RAM_capacity(); see below
+#In các câu lệnh để hiển thị các tùy chọn RAM
+#Được sử dụng cho RAM_capacity(); xem bên dưới
 def RAM_print_options():
 	print("\nBây giờ, việc tiếp theo cần làm là hiểu và chọn dung lượng RAM mà bạn muốn máy tính xách tay của mình có.\n")
 	print("RAM là viết tắt của Random-Access Memory. Đôi khi mọi người nhầm lẫn RAM với dung lượng lưu trữ vì cả hai đều sử dụng GB làm đơn vị đo lường.")
@@ -360,6 +406,15 @@ def RAM_capacity():
 #Kích thước màn hình (họ sẽ di chuyển nhiều hay ở yên một chỗ)
 #Storage (họ có muốn nhiều không gian lưu trữ không)
 #Ram (họ cần máy tính xách tay của họ mạnh đến mức nào)
+
+def question_sex_closing():
+	global sex
+	global sex_print
+	if (sex==1):
+		sex_print="Nam"
+	else:
+		sex_print="Nữ"
+	return (sex_print)
 
 def laptop_purpose_closing():
 	global laptop_purpose
@@ -423,11 +478,12 @@ def closing():
 	
 	print("\nCảm ơn bạn rất nhiều vì câu trả lời của bạn, " + user_name + "! Đây là bản ghi các thông tin đầu vào của bạn và chúng tôi muốn đảm bảo rằng chúng tôi đã nhận được câu trả lời đúng của bạn. Vui lòng xem qua câu trả lời của bạn và cho chúng tôi biết nếu bạn muốn thay đổi bất cứ điều gì trước khi chúng tôi đưa ra đề xuất của mình.\n")
 	
-	print("(1)Mục đích máy tính: " + laptop_purpose_closing())
-	print("(2)Ngân sách: $" + budget_closing())
-	print("(3)Kích thước màn hình: " + screen_size_closing())
-	print("(4)Dung lượng lưu trữ: " + storage_size_closing())
-	print("(5)Dung lượng RAM: " + RAM_capacity_closing())
+	print("(1)Giới tính: " + question_sex_closing())
+	print("(2)Mục đích máy tính: " + laptop_purpose_closing())
+	print("(3)Ngân sách: $" + budget_closing())
+	print("(5)Kích thước màn hình: " + screen_size_closing())
+	print("(6)Dung lượng lưu trữ: " + storage_size_closing())
+	print("(7)Dung lượng RAM: " + RAM_capacity_closing())
 	'''
 	print (user_name)
 	print (confidence)
@@ -452,10 +508,11 @@ def closing():
 ###MAIN FUNCTION###
 
 def main():
-	global b, ss, sc, r
+	global b, ss, sc, r, sex
 	greeting()
+	question_sex()
 	type_user()
-	#if the user is experienced at laptops
+	#if the user is experienced at laptops (#nếu người dùng có kinh nghiệm sử dụng máy tính xách tay)
 	if (type_user()==2):
 		print("Người dùng có kinh nghiệm")
 		application()
@@ -464,7 +521,7 @@ def main():
 		sc = storage_size() # returns storage_cap
 		r = RAM_capacity() # returns RAM
 		closing()
-	#if the user is average at laptops
+	#if the user is average at laptops (#nếu người dùng sử dụng máy tính xách tay ở mức trung bình)
 	elif (type_user()==1):
 		print("Người dùng ở mức trung bình")
 		application()
@@ -473,7 +530,7 @@ def main():
 		sc = storage_size()
 		r = RAM_capacity()
 		closing()
-	#if the user is new at laptops
+	#if the user is new at laptops (#nếu người dùng mới sử dụng máy tính xách tay)
 	else:
 		print("Người dùng mới")
 		application()

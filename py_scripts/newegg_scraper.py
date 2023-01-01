@@ -10,7 +10,7 @@ with open('newegg_macbooks.csv', 'a') as f:
     w.writerow(col_names)
 
     for p in range(8, 20):
-        # track progress
+        # track progress (# theo dõi tiến độ)
         print('on page ' + str(p) + '...')
         print('~'*10)
 
@@ -22,19 +22,19 @@ with open('newegg_macbooks.csv', 'a') as f:
         page = requests.get('http://api.scraperapi.com', params=payload, headers=headers)
         soup = bs(page.text, 'html.parser')
 
-        # loop through item info cards
+        # loop through item info cards (# lặp qua thẻ thông tin mặt hàng)
         item_infos = soup.find_all(class_='item-info')[4:]
         for i in range(len(item_infos)):
-            # track progress
+            # track progress (# theo dõi tiến độ)
             print('on product ' + str(i) + '...')
 
-            # put info in dictionary
+            # put info in dictionary (# đưa thông tin vào từ điển)
             product_info = {'Name': '', 'Price': '', 'Brand': '', 'Series': '', 'Model': '',
                             'Rating': '', 'Operating System': '', 'CPU Type': '', 'CPU Speed': '',
                             'Number of Cores': '',
                             'Storage': '', 'Memory': '', 'GPU/VPU': '', 'Video Memory': '', 'Screen Size': ''}
 
-            # get name and price
+            # get name and price (# lấy tên và giá)
             name = item_infos[i].find(class_='item-title').text.strip()
             if item_infos[i].find('li', class_='price-current').strong is not None:
                 price = item_infos[i].find('li', class_='price-current').strong.text + \
@@ -45,13 +45,13 @@ with open('newegg_macbooks.csv', 'a') as f:
             product_info['Price'] = price
 
 
-            # visit product page
+            # visit product page (# truy cập trang sản phẩm)
             payload_2 = {'api_key': '6f778a820ab7912beb310a1a4f021151',
                          'url': item_infos[i].find('a', class_='item-title')['href']}
             page_2 = requests.get('http://api.scraperapi.com', params=payload_2, headers=headers)
             soup_2 = bs(page_2.text, 'html.parser')
 
-            # get rating if it has one
+            # get rating if it has one (# nhận xếp hạng nếu có)
             try:
                 rating = soup_2.find('div', class_='grpRating').find('i', class_='rating')['title'][0]
                 product_info['Rating'] = rating
@@ -60,14 +60,14 @@ with open('newegg_macbooks.csv', 'a') as f:
             except TypeError:
                 pass
 
-            # get specs
+            # get specs # lấy thông số kỹ thuật
             for fieldset in soup_2.find_all('fieldset'):
                 for dl in fieldset.find_all('dl'):
                     if dl.dt.text.strip() in product_info.keys():
                         product_info[dl.dt.text.strip()] = dl.dd.text.strip()
 
-            # write to csv
+            # write to csv (# ghi vào csv)
             w.writerow(product_info.values())
 
-# close the file
+# close the file # đóng tệp
 f.close()
