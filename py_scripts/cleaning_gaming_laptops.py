@@ -177,4 +177,4 @@ clean_gpu_memory()
 clean_gpu_type()
 clean_screen_sizes()
 
-gaming_laptops_df.to_csv("gaming_laptop_cleaned.csv")
+gaming_laptops_df.to_csv("../data/gaming_laptops_cleaned.csv")

@@ -119,7 +119,7 @@ else:
     if len(top_10_weight) == 0:
       print("Sorry, we do not have any products that match up to what you are looking for :c")
     else:
-      print("Alright, after considering all the factors that you answered for us, we decided on this list of the top " + str(len(top_10)) + " laptops best suited for you!\n")
+      print("Alright, after considering all the factors that you answered for us, we decided on this list of the top " + str(len(top_10_weight)) + " laptops best suited for you!\n")
       top_10_weight.to_csv('../data/nu.csv')
       n = 1
       for i in top_10_weight.index:

@@ -6,7 +6,7 @@ pd.set_option('display.width', 500)
 pd.set_option('display.max_columns', 15)
 
 # csv into pd data frame (chuyển csv thành pd data frame)
-study_df = pd.read_csv('study_laptops_raw.csv', sep=',')
+study_df = pd.read_csv('../data/study_laptops_raw.csv', sep=',')
 
 # temporarily fill all N/A with -1 (tạm thời điền tất cả N/A với -1)
 study_df = study_df.fillna(-1)
@@ -98,12 +98,13 @@ def clean_screen_sizes(study_df):
 
 
 ## MAIN ##
-clean_prices(study_study_df)
-clean_cpu_speed(study_study_df)
-clean_cores(study_study_df)
-clean_storage(study_study_df)
-clean_memory(study_study_df)
-clean_screen_sizes(study_study_df)
+clean_prices(study_df)
+clean_cpu_speed(study_df)
+clean_cores(study_df)
+clean_storage(study_df)
+clean_memory(study_df)
+clean_screen_sizes(study_df)
 
 # write to csv (ghi vào file csv)
 
+study_df.to_csv("../data/study_laptops_cleaned.csv")
